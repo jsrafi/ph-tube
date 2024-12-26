@@ -33,19 +33,25 @@ const showVideo = (data) => {
     for( const item of data)
     {
       const section = document.createElement('div');
+      section.classList = 'card card-compact'
       section.innerHTML = `
       
-  <figure>
-    <img
+  <figure class="h-[180px] relative">
+    <img class="h-full object-cover w-full"
       src=${item.thumbnail}
       alt="Shoes" />
+      ${item.others.posted_date ? `<span class="absolute right-2 bottom-2 bg-black text-white rounded p-1"> ${item.others.posted_date} </span> `: ""}
   </figure>
-  <div class="card-body">
-    <h2 class="card-title">Shoes!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div class="card-actions justify-end">
-      <button class="btn btn-primary">Buy Now</button>
-    </div>
+  <div class="py-2 flex gap-3 mt-3">
+        <div class="w-[50px] h-[50px] ">
+            <img class="w-full h-full rounded-full object-cover"  src="${item.authors[0].profile_picture}" alt="">
+        </div>
+
+        <div class="flex flex-col gap-2 ">
+            <h3 class="text-xl font-bold">${item.title}</h3>
+            <p class="flex items-center gap-2">${item.authors[0].profile_name} ${item.authors[0].verified === true ? `<img class="" src="assets/Group (1).png" alt="">` : ""}</p>
+            <p>${item.others.views} views</p>
+        </div>
   </div>
 
       `
