@@ -89,6 +89,8 @@ function removeBgBtn()
 async function showCategories(id)
 {
   removeBgBtn();
+  const searchBar = document.getElementById('search-input');
+  searchBar.value = "";
   const categoryBtn = document.getElementById(`btn-${id}`)
     categoryBtn.classList.add('bg-[#FF1F3D]','text-white');
    
@@ -128,9 +130,10 @@ const showBtn = (data) => {
 }
 
 
-const fetchVideo = async() => {
+const fetchVideo = async(id = "") => {
 
-    const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
+    removeBgBtn();
+    const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${id}`);
     const data = await res.json();
     showVideo(data.videos)
 }
@@ -197,4 +200,14 @@ const showVideo = (data) => {
      
       videoSection.appendChild(section);
     }
+}
+
+document.getElementById('search-input').addEventListener('keyup',(event)=>{loadSearch(event.target.value)})
+
+function loadSearch(value)
+{
+  const searchBtn = document.getElementById('click');
+  searchBtn.onclick = () => {
+    fetchVideo(value)
+  }
 }
